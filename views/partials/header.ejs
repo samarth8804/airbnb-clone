@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>header</title>
+  </head>
+  <body>
+    <nav class="bg-white shadow">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <a
+              href="/user"
+              class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'home' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+            >
+              Home
+            </a>
+          </div>
+          <div class="flex items-center">
+            <a
+              href="/host/add-home"
+              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'addHome' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+            >
+              Add Home
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>
