@@ -3,9 +3,8 @@ const express = require("express");
 const router = express.Router();
 
 const rootDir = require("../utils/pathUtils");
+const { getHome } = require("../controllers/homes");
 
-router.get("/", (req, res, next) => {
-  res.sendFile(path.join(rootDir, "views", "home.html"));
-});
+router.get("/", getHome);
 
 module.exports = router;
