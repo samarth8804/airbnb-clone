@@ -8,13 +8,45 @@
   <body>
     <nav class="bg-white shadow">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex gap-5 h-16">
           <div class="flex">
             <a
               href="/user"
+              class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'index' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+            >
+              Airbnb
+            </a>
+          </div>
+          <div class="flex">
+            <a
+              href="/user/homeList"
               class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'home' ? 'text-rose-500' : 'hover:text-rose-500'%>"
             >
               Home
+            </a>
+          </div>
+          <div class="flex">
+            <a
+              href="/user/favourites"
+              class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'favourites' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+            >
+              Favourites
+            </a>
+          </div>
+          <div class="flex items-center">
+            <a
+              href="/user/bookings"
+              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'bookings' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+            >
+              Bookings
+            </a>
+          </div>
+          <div class="flex items-center">
+            <a
+              href="/host/host-home-list"
+              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'hostHomes' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+            >
+              Host Homes
             </a>
           </div>
           <div class="flex items-center">

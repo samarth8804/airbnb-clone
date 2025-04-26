@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= home.houseName %> - Details</title>
+    <link rel="stylesheet" href="/stylesheets/output.css" />
+  </head>
+  <body class="bg-white">
+    <%- include("../partials/header") %>
+
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">
+          <%= home.houseName %>
+        </h1>
+        <img
+          src="<%= home.houseImage %>"
+          alt="<%= home.houseName %>"
+          class="w-full h-96 object-cover rounded-lg shadow-md mb-6"
+        />
+
+        <div class="space-y-2">
+          <p class="text-lg text-gray-700">
+            <strong>Location:</strong> <%= home.location %>
+          </p>
+          <p class="text-lg text-gray-700">
+            <strong>Price per Night:</strong> ₹<%= home.price %>
+          </p>
+          <p class="text-lg text-gray-700">
+            <strong>Rating:</strong> ⭐ <%= home.rating %>/5
+          </p>
+        </div>
+      </div>
+
+      <div><%- include("../partials/favourite")%></div>
+
+      <a
+        href="/user"
+        class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 mt-4"
+      >
+        Go Home
+      </a>
+    </main>
+  </body>
+</html>

@@ -3,41 +3,40 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Airbnb Home</title>
+    <title>Favourites</title>
     <link rel="stylesheet" href="/stylesheets/output.css" />
   </head>
   <body class="bg-white">
     <%- include("../partials/header") %>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 class="text-3xl font-semibold text-gray-900 mb-8">Your listings</h1>
+      <h1 class="text-3xl font-semibold text-gray-900 mb-8">Favourite Homes</h1>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <% registeredHomes.forEach((home) => { %>
+        <% favourites.forEach((favourite) => { %>
         <li
           class="bg-white rounded-xl shadow-md overflow-hidden transition-transform hover:scale-105"
         >
           <img
-            src="<%= home.houseImage %>"
+            src="<%= favourite.houseImage %>"
             alt="House Image"
             class="w-full h-48 object-cover"
           />
           <div class="p-4">
             <h3 class="text-lg font-semibold text-gray-900">
-              <%= home.houseName %>
+              <%= favourite.houseName %>
             </h3>
-            <p class="text-gray-600 mt-1">Location: <%= home.location %></p>
-            <p class="text-gray-600 mt-1">Price: $<%= home.price %>/night</p>
+            <p class="text-gray-600 mt-1">
+              Location: <%= favourite.location %>
+            </p>
+            <p class="text-gray-600 mt-1">
+              Price: $<%= favourite.price %>/night
+            </p>
             <div class="flex items-center mt-2">
               <span class="text-yellow-400 mr-1">★</span>
-              <span class="text-gray-700"><%= home.rating %></span>
+              <span class="text-gray-700"><%= favourite.rating %></span>
             </div>
-            <div class="flex gap-2">
-              <a
-                href="/user/details/<%=home.id%>"
-                class="bg-blue-300 border-2 border-transparent p-2 text-zinc-900 rounded-md"
-                >Details</a
-              >
-              <%- include("../partials/favourite",{home : home})%>
-            </div>
+            <button class="bg-amber-300 text-zinc-900 rounded-md p-2">
+              Book
+            </button>
           </div>
         </li>
         <% }) %>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AddHome</title>
+    <link rel="stylesheet" href="/stylesheets/output.css" />
+  </head>
+  <body class="bg-white">
+    <%- include("../partials/header") %>
+    <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <h1 class="text-3xl font-semibold text-gray-900 mb-8">
+        Edit your home on AirBnB
+      </h1>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <form action="/host/edit-home" method="POST" class="max-w-lg">
+        <input type="hidden" name="id" value="<%= home.id %>" />
+        <input
+          type="text"
+          name="houseName"
+          placeholder="Enter your house name here"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
+          value="<%= home.houseName %>"
+        />
+        <input
+          type="number"
+          name="price"
+          placeholder="Enter price per night"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
+          value="<%= home.price %>"
+        />
+        <input
+          type="text"
+          name="location"
+          placeholder="Enter your home's address"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
+          value="<%= home.location %>"
+        />
+        <input
+          type="number"
+          name="rating"
+          placeholder="Enter user rating"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
+          value="<%= home.rating %>"
+        />
+        <input
+          type="text"
+          name="houseImage"
+          placeholder="Enter image address"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
+          value="<%= home.houseImage %>"
+        />
+        <button
+          type="submit"
+          class="mt-4 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+        >
+          Update
+        </button>
+      </form>
+    </main>
+  </body>
+</html>
