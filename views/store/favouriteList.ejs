@@ -34,9 +34,22 @@
               <span class="text-yellow-400 mr-1">★</span>
               <span class="text-gray-700"><%= favourite.rating %></span>
             </div>
-            <button class="bg-amber-300 text-zinc-900 rounded-md p-2">
-              Book
-            </button>
+            <div class="flex gap-2">
+              <button class="bg-amber-300 text-zinc-900 rounded-md p-2">
+                Book
+              </button>
+              <form
+                action="/user/delete-favourite/<%= favourite.id %>"
+                method="POST"
+              >
+                <button
+                  type="submit"
+                  class="bg-red-600 border-2 border-transparent p-2 text-zinc-900 rounded-md"
+                >
+                  Delete
+                </button>
+              </form>
+            </div>
           </div>
         </li>
         <% }) %>

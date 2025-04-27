@@ -26,4 +26,11 @@ module.exports = class Favourite {
       }
     });
   }
+
+  static deleteById(homeId, callback) {
+    Favourite.getFavourites((favourites) => {
+      favourites = favourites.filter((favourite) => favourite !== homeId);
+      fs.writeFile(filePath, JSON.stringify(favourites), callback);
+    });
+  }
 };

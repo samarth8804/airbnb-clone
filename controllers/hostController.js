@@ -1,6 +1,7 @@
 // const registeredHomes = [];
 
 const Home = require("../models/home");
+const Favourite = require("../models/favourite");
 
 exports.getAddHome = (req, res, next) => {
   // res.sendFile(path.join(rootDir, "views", "addHome.html"));
@@ -67,6 +68,12 @@ exports.deleteHome = (req, res, next) => {
     if (error) {
       console.log("Error while deleting", error);
     }
+
+    Favourite.deleteById(homeId, (error) => {
+      if (error) {
+        console.log("Problem in deleting from favourites", error);
+      }
+    });
 
     res.redirect("/host/host-home-list");
   });

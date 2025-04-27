@@ -55,3 +55,14 @@ exports.addFavourite = (req, res, next) => {
     res.redirect("/user/favourites");
   });
 };
+
+exports.deleteFavourites = (req, res, next) => {
+  const homeId = req.params.homeId;
+  Favourite.deleteById(homeId, (error) => {
+    if (error) {
+      console.log("Problem in deleting from favourites", error);
+    }
+
+    res.redirect("/user/favourites");
+  });
+};
