@@ -10,9 +10,17 @@ exports.getAddHome = (req, res, next) => {
 
 exports.homeAdded = (req, res, next) => {
   console.log("Home registration successfull for ", req.body.houseName);
-  const { houseName, price, location, houseImage, rating } = req.body;
+  const { houseName, price, location, houseImage, rating, description } =
+    req.body;
 
-  const home = new Home(houseName, houseImage, rating, price, location);
+  const home = new Home(
+    houseName,
+    houseImage,
+    rating,
+    price,
+    location,
+    description
+  );
 
   home.save();
 
@@ -22,7 +30,7 @@ exports.homeAdded = (req, res, next) => {
 };
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll((registeredHomes) => {
+  Home.fetchAll().then(([registeredHomes]) => {
     res.render("host/hostHomeList", {
       registeredHomes,
       currentPage: "hostHomes",
@@ -34,7 +42,8 @@ exports.getEditHome = (req, res, next) => {
   const homeId = req.params.homeId;
   const editing = req.query.editing === "true";
 
-  Home.fetchById(homeId, (home) => {
+  Home.fetchById(homeId).then(([homes]) => {
+    const home = homes[0];
     if (!home) {
       console.log("Home not found for editing.");
       return res.redirect("/host/host-home-list");
@@ -51,10 +60,18 @@ exports.getEditHome = (req, res, next) => {
 
 exports.postEditHome = (req, res, next) => {
   console.log("Home edit successfull for ", req.body.houseName);
-  const { id, houseName, price, location, houseImage, rating } = req.body;
+  const { id, houseName, price, location, houseImage, rating, description } =
+    req.body;
 
-  const home = new Home(houseName, houseImage, rating, price, location);
-  home.id = id;
+  const home = new Home(
+    houseName,
+    houseImage,
+    rating,
+    price,
+    location,
+    description,
+    id
+  );
 
   home.save();
 
@@ -64,17 +81,11 @@ exports.postEditHome = (req, res, next) => {
 exports.deleteHome = (req, res, next) => {
   const homeId = req.params.homeId;
   console.log("Home deleted successfully ", homeId);
-  Home.deleteById(homeId, (error) => {
-    if (error) {
-      console.log("Error while deleting", error);
-    }
-
-    Favourite.deleteById(homeId, (error) => {
-      if (error) {
-        console.log("Problem in deleting from favourites", error);
-      }
+  Home.deleteById(homeId)
+    .then(() => {
+      res.redirect("/host/host-home-list");
+    })
+    .catch((error) => {
+      console.log("Error while deleting ", error);
     });
-
-    res.redirect("/host/host-home-list");
-  });
 };

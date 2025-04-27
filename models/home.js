@@ -1,64 +1,57 @@
-// Fake database
-const fs = require("fs");
-const path = require("path");
-const rootDir = require("../utils/pathUtils");
-
-const filePath = path.join(rootDir, "data", "homes.json");
+const db = require("../utils/databaseUtil");
 
 module.exports = class Home {
-  constructor(houseName, houseImage, rating, price, location) {
+  constructor(houseName, houseImage, rating, price, location, description, id) {
     this.houseImage = houseImage;
     this.houseName = houseName;
     this.rating = rating;
     this.location = location;
     this.price = price;
+    this.description = description;
+    this.id = id;
   }
 
   save() {
-    Home.fetchAll((registeredHomes) => {
-      if (this.id) {
-        //edit home case
-        registeredHomes = registeredHomes.map((home) => {
-          if (home.id === this.id) {
-            return this;
-          }
-          return home;
-        });
-      } else {
-        // add home case
+    if (this.id) {
+      //update
+      return db.execute(
+        `UPDATE homes SET houseName=?,houseImage=?,rating=?,price=?,location=?,description=? WHERE id=?`,
+        [
+          this.houseName,
+          this.houseImage,
+          this.rating,
+          this.price,
+          this.location,
+          this.description,
+          this.id,
+        ]
+      );
+    } else {
+      // insert
 
-        this.id = Math.random().toString();
-
-        registeredHomes.push(this);
-      }
-
-      fs.writeFile(filePath, JSON.stringify(registeredHomes), (err) => {
-        console.log(err);
-      });
-    });
+      return db.execute(
+        "INSERT INTO homes (houseName, houseImage, rating, price, location,description) VALUES (?,?,?,?,?,?)",
+        [
+          this.houseName,
+          this.houseImage,
+          this.rating,
+          this.price,
+          this.location,
+          this.description,
+        ]
+      );
+    }
   }
 
-  static fetchAll(callback) {
-    fs.readFile(filePath, (err, data) => {
-      if (!err) {
-        callback(JSON.parse(data));
-      } else {
-        callback([]);
-      }
-    });
+  static fetchAll() {
+    return db.execute("SELECT * FROM homes");
   }
 
-  static fetchById(homeId, callback) {
-    this.fetchAll((homes) => {
-      const homeFound = homes.find((home) => home.id === homeId);
-      callback(homeFound);
-    });
+  static fetchById(homeId) {
+    return db.execute("SELECT * FROM homes WHERE id=?", [homeId]);
   }
 
-  static deleteById(homeId, callback) {
-    this.fetchAll((homes) => {
-      homes = homes.filter((home) => home.id !== homeId);
-      fs.writeFile(filePath, JSON.stringify(homes), callback);
-    });
+  static deleteById(homeId) {
+    return db.execute("DELETE FROM homes WHERE id=?", [homeId]);
   }
 };

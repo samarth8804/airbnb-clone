@@ -7,6 +7,7 @@ const { hostRouter } = require("./routes/hostRouter");
 const rootDir = require("./utils/pathUtils");
 const { error404 } = require("./controllers/error");
 
+
 // ejs setup
 app.set("view engine", "ejs");
 app.set("views", "views");
