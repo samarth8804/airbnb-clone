@@ -6,7 +6,7 @@ const storeRouter = require("./routes/storeRouter");
 const { hostRouter } = require("./routes/hostRouter");
 const rootDir = require("./utils/pathUtils");
 const { error404 } = require("./controllers/error");
-
+const mongoConnect = require("./utils/databaseUtil");
 
 // ejs setup
 app.set("view engine", "ejs");
@@ -21,4 +21,7 @@ app.use("/host", hostRouter);
 
 app.use(error404);
 
-app.listen(3000);
+mongoConnect((client) => {
+  console.log(client);
+  app.listen(3000);
+});

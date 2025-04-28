@@ -1,0 +1,1 @@
+mongodb+srv://samarthmittal0808:samarth@atlas@1@cluster0.a9socrh.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
