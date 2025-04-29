@@ -35,11 +35,11 @@
 
             <div class="flex gap-2">
               <a
-                href="/host/edit-home/<%= home.id %>?editing=true"
+                href="/host/edit-home/<%= home._id %>?editing=true"
                 class="bg-amber-300 border-2 border-transparent p-2 text-zinc-900 rounded-md"
                 >Edit</a
               >
-              <form action="/host/delete-home/<%= home.id %>" method="POST">
+              <form action="/host/delete-home/<%= home._id %>" method="POST">
                 <button
                   type="submit"
                   class="bg-red-600 border-2 border-transparent p-2 text-zinc-900 rounded-md"

@@ -9,7 +9,6 @@ exports.getAddHome = (req, res, next) => {
 };
 
 exports.homeAdded = (req, res, next) => {
-  console.log("Home registration successfull for ", req.body.houseName);
   const { houseName, price, location, houseImage, rating, description } =
     req.body;
 
@@ -22,15 +21,15 @@ exports.homeAdded = (req, res, next) => {
     description
   );
 
-  home.save();
+  home.save().then((result) => {
+    console.log("Home saved successfully ", result);
+  });
 
-  // registeredHomes.push({ houseName, houseImage, rating, location, price });
-  // res.sendFile(path.join(rootDir, "views", "homeAdded.html"));
   res.render("host/homeAdded", { currentPage: "homeAdded" });
 };
 
 exports.getHostHomes = (req, res, next) => {
-  Home.fetchAll().then(([registeredHomes]) => {
+  Home.fetchAll().then((registeredHomes) => {
     res.render("host/hostHomeList", {
       registeredHomes,
       currentPage: "hostHomes",
@@ -42,8 +41,8 @@ exports.getEditHome = (req, res, next) => {
   const homeId = req.params.homeId;
   const editing = req.query.editing === "true";
 
-  Home.fetchById(homeId).then(([homes]) => {
-    const home = homes[0];
+  Home.fetchById(homeId).then((home) => {
+    
     if (!home) {
       console.log("Home not found for editing.");
       return res.redirect("/host/host-home-list");
