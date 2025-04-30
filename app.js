@@ -6,7 +6,7 @@ const storeRouter = require("./routes/storeRouter");
 const { hostRouter } = require("./routes/hostRouter");
 const rootDir = require("./utils/pathUtils");
 const { error404 } = require("./controllers/error");
-const {mongoConnect} = require("./utils/databaseUtil");
+const { default: mongoose } = require("mongoose");
 
 // ejs setup
 app.set("view engine", "ejs");
@@ -21,7 +21,18 @@ app.use("/host", hostRouter);
 
 app.use(error404);
 
-mongoConnect(() => {
-  console.log("Connected to db");
-  app.listen(3000);
-});
+const PORT = 3000;
+
+mongoose
+  .connect(
+    "mongodb+srv://samarthmittal0808:samarth%40atlas%401@cluster0.a9socrh.mongodb.net/airbnb?retryWrites=true&w=majority&appName=Cluster0"
+  )
+  .then(() => {
+    console.log("Connected with db");
+    app.listen(PORT, () => {
+      console.log(`Server running on address http://localhost:${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("Error while connecting to mongo : ", err);
+  });

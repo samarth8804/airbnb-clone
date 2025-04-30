@@ -4,7 +4,7 @@ const Home = require("../models/home");
 exports.index = (req, res, next) => {
   // console.log(registeredHomes);
   // res.sendFile(path.join(rootDir, "views", "home.html"));
-  Home.fetchAll().then((registeredHomes) => {
+  Home.find().then((registeredHomes) => {
     res.render("store/index", { registeredHomes, currentPage: "index" });
   });
 };
@@ -12,7 +12,7 @@ exports.index = (req, res, next) => {
 exports.getHome = (req, res, next) => {
   // console.log(registeredHomes);
   // res.sendFile(path.join(rootDir, "views", "home.html"));
-  Home.fetchAll().then((registeredHomes) => {
+  Home.find().then((registeredHomes) => {
     res.render("store/homeList", { registeredHomes, currentPage: "home" });
   });
 };
@@ -22,26 +22,22 @@ exports.bookings = (req, res, next) => {
 };
 
 exports.favouriteList = (req, res, next) => {
-  Favourite.getFavourites().then((favourites) => {
-    favourites = favourites.map((fav) => fav.homeId);
-    Home.fetchAll().then((registeredHomes) => {
-      const favouritesDetails = registeredHomes.filter((home) =>
-        favourites.includes(home._id.toString())
-      );
-
-      // console.log(favouritesDetails);
+  Favourite.find()
+    .populate("homeId")
+    .then((favourites) => {
+      const favouriteDetails = favourites.map((fav) => fav.homeId);
 
       res.render("store/favouriteList", {
-        favourites: favouritesDetails,
+        favourites: favouriteDetails,
+        pageTitle: "My Favourites",
         currentPage: "favourites",
       });
     });
-  });
 };
 
 exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
-  Home.fetchById(homeId).then((home) => {
+  Home.findById(homeId).then((home) => {
     if (!home) {
       res.redirect("/user/homeList");
     } else {
@@ -52,10 +48,10 @@ exports.getHomeDetails = (req, res, next) => {
 
 exports.addFavourite = (req, res, next) => {
   const homeId = req.body.id;
-  const favourite = new Favourite(homeId);
+  const favourite = new Favourite({ homeId });
 
   favourite
-    .addToFavourite()
+    .save()
     .then((result) => {
       console.log(result);
     })
@@ -69,7 +65,7 @@ exports.addFavourite = (req, res, next) => {
 
 exports.deleteFavourites = (req, res, next) => {
   const homeId = req.params.homeId;
-  Favourite.deleteById(homeId)
+  Favourite.findOneAndDelete(homeId)
     .then((result) => {
       console.log(result);
     })
