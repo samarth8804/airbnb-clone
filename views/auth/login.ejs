@@ -13,12 +13,14 @@
     </header>
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <form action="/login" method="POST" class="max-w-lg">
+        <%- include("../partials/errors") %>
         <input
-          type="text"
-          name="username"
-          placeholder="Email/Username"
+          type="email"
+          name="email"
+          placeholder="Enter your email"
           class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
           required
+          value="<%= oldInput.email ? oldInput.email : '' %>"
         />
         <input
           type="password"

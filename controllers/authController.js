@@ -1,14 +1,40 @@
 const { check, validationResult } = require("express-validator");
+const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 exports.getLogin = (req, res, next) => {
-  res.render("auth/login", { currentPage: "login", isLoggedIn: false });
+  res.render("auth/login", {
+    currentPage: "login",
+    isLoggedIn: false,
+    errors: [],
+    oldInput: { email: "" },
+  });
 };
 
-exports.postLogin = (req, res, next) => {
-  const username = req.body.username;
-  console.log(username);
-  // res.cookie("isLoggedIn", true);
+exports.postLogin = async (req, res, next) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) {
+    return res.status(422).render("auth/login", {
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["Inavlid email or password"],
+      oldInput: { email },
+    });
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(422).render("auth/login", {
+      currentPage: "login",
+      isLoggedIn: false,
+      errors: ["Inavlid email or password"],
+      oldInput: { email },
+    });
+  }
   req.session.isLoggedIn = true;
+  req.session.user = user;
+  await req.session.save();
   res.redirect("/");
 };
 
@@ -75,7 +101,7 @@ exports.postSignup = [
     .exists()
     .withMessage("You must accept the terms and conditions"),
   (req, res, next) => {
-    const { firstname, lastname, email, userType } = req.body;
+    const { firstname, lastname, email, userType, password } = req.body;
 
     const error = validationResult(req);
 
@@ -92,6 +118,34 @@ exports.postSignup = [
         },
       });
     }
-    res.redirect("/login");
+
+    bcrypt
+      .hash(password, 12)
+      .then((hashedPassword) => {
+        const user = new User({
+          firstname,
+          lastname,
+          email,
+          password: hashedPassword,
+          userType,
+        });
+        return user.save();
+      })
+      .then(() => {
+        res.redirect("/login");
+      })
+      .catch((err) => {
+        return res.status(422).render("auth/signup", {
+          currentPage: "signup",
+          isLoggedIn: false,
+          errors: [err.message],
+          oldInput: {
+            firstname,
+            lastname,
+            email,
+            userType,
+          },
+        });
+      });
   },
 ];
