@@ -6,72 +6,76 @@
     <title>header</title>
   </head>
   <body>
-    <nav class="bg-white shadow">
+    <nav class="bg-white shadow-md sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex gap-5 h-16">
-          <div class="flex">
-            <a
-              href="/"
-              class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'index' ? 'text-rose-500' : 'hover:text-rose-500'%>"
-            >
-              Airbnb
+        <div class="flex items-center justify-between h-16">
+          <!-- Left side - Logo -->
+          <div class="flex items-center">
+            <a href="/" class="flex items-center">
+              <span
+                class="text-2xl font-bold text-rose-500 hover:text-rose-600 transition-colors"
+              >
+                Airbnb
+              </span>
             </a>
           </div>
-          <% if(isLoggedIn) { %>
-          <div class="flex">
+
+          <!-- Center - Navigation Links -->
+          <div class="hidden md:flex items-center space-x-4">
+            <% if(isLoggedIn) { %>
             <a
               href="/homeList"
-              class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'home' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+              class="px-3 py-2 rounded-md text-sm font-medium <%= currentPage === 'home' ? 'text-rose-500 bg-rose-50' : 'text-gray-700 hover:text-rose-500 hover:bg-rose-50' %> transition-all"
             >
               Home
             </a>
-          </div>
-          <div class="flex">
             <a
               href="/favourites"
-              class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'favourites' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+              class="px-3 py-2 rounded-md text-sm font-medium <%= currentPage === 'favourites' ? 'text-rose-500 bg-rose-50' : 'text-gray-700 hover:text-rose-500 hover:bg-rose-50' %> transition-all"
             >
               Favourites
             </a>
-          </div>
-          <div class="flex items-center">
             <a
               href="/bookings"
-              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'bookings' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+              class="px-3 py-2 rounded-md text-sm font-medium <%= currentPage === 'bookings' ? 'text-rose-500 bg-rose-50' : 'text-gray-700 hover:text-rose-500 hover:bg-rose-50' %> transition-all"
             >
               Bookings
             </a>
-          </div>
-          <div class="flex items-center">
             <a
               href="/host/host-home-list"
-              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'hostHomes' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+              class="px-3 py-2 rounded-md text-sm font-medium <%= currentPage === 'hostHomes' ? 'text-rose-500 bg-rose-50' : 'text-gray-700 hover:text-rose-500 hover:bg-rose-50' %> transition-all"
             >
               Host Homes
             </a>
-          </div>
-          <div class="flex items-center">
             <a
               href="/host/add-home"
-              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'addHome' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+              class="px-3 py-2 rounded-md text-sm font-medium <%= currentPage === 'addHome' ? 'text-rose-500 bg-rose-50' : 'text-gray-700 hover:text-rose-500 hover:bg-rose-50' %> transition-all"
             >
               Add Home
             </a>
+            <% } %>
           </div>
-          <% } %>
-          <div class="flex items-center">
+
+          <!-- Right side - Auth Buttons -->
+          <div class="flex items-center space-x-2">
             <% if(!isLoggedIn) { %>
             <a
+              href="/signup"
+              class="px-4 py-2 text-sm font-medium <%= currentPage === 'signup' ? 'text-white bg-rose-500' : 'text-gray-700 hover:text-rose-500' %> rounded-full transition-all"
+            >
+              Sign up
+            </a>
+            <a
               href="/login"
-              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'login' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+              class="px-4 py-2 text-sm font-medium <%= currentPage === 'login' ? 'text-white bg-rose-500' : 'text-gray-700 hover:text-rose-500' %> rounded-full transition-all"
             >
               Login
             </a>
             <% } else { %>
             <form action="/logout" method="POST">
               <button
-                type="Sumbit"
-                class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'login' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+                type="submit"
+                class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-rose-500 rounded-full transition-all"
               >
                 Logout
               </button>
