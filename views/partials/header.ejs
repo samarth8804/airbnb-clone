@@ -22,7 +22,7 @@
 
           <!-- Center - Navigation Links -->
           <div class="hidden md:flex items-center space-x-4">
-            <% if(isLoggedIn) { %>
+            <% if(isLoggedIn) { %> <% if(user && user.userType === "guest") { %>
             <a
               href="/homeList"
               class="px-3 py-2 rounded-md text-sm font-medium <%= currentPage === 'home' ? 'text-rose-500 bg-rose-50' : 'text-gray-700 hover:text-rose-500 hover:bg-rose-50' %> transition-all"
@@ -41,6 +41,7 @@
             >
               Bookings
             </a>
+            <% }else{ %>
             <a
               href="/host/host-home-list"
               class="px-3 py-2 rounded-md text-sm font-medium <%= currentPage === 'hostHomes' ? 'text-rose-500 bg-rose-50' : 'text-gray-700 hover:text-rose-500 hover:bg-rose-50' %> transition-all"
@@ -53,7 +54,7 @@
             >
               Add Home
             </a>
-            <% } %>
+            <% } %> <% } %>
           </div>
 
           <!-- Right side - Auth Buttons -->

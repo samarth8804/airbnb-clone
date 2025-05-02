@@ -8,6 +8,7 @@ exports.getAddHome = (req, res, next) => {
   res.render("host/addHome", {
     currentPage: "addHome",
     isLoggedIn: req.session.isLoggedIn,
+    user: req.session.user
   });
 };
 
@@ -31,6 +32,7 @@ exports.homeAdded = (req, res, next) => {
   res.render("host/homeAdded", {
     currentPage: "homeAdded",
     isLoggedIn: req.isLoggedIn,
+    user: req.session.user
   });
 };
 
@@ -40,6 +42,7 @@ exports.getHostHomes = (req, res, next) => {
       registeredHomes,
       currentPage: "hostHomes",
       isLoggedIn: req.session.isLoggedIn,
+      user: req.session.user
     });
   });
 };
@@ -60,6 +63,7 @@ exports.getEditHome = (req, res, next) => {
       editing: editing,
       home: home,
       isLoggedIn: req.session.isLoggedIn,
+      user: req.session.user
     });
   });
 };

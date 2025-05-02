@@ -8,6 +8,7 @@ exports.getLogin = (req, res, next) => {
     isLoggedIn: false,
     errors: [],
     oldInput: { email: "" },
+    user: req.session.user,
   });
 };
 
@@ -20,6 +21,7 @@ exports.postLogin = async (req, res, next) => {
       isLoggedIn: false,
       errors: ["Inavlid email or password"],
       oldInput: { email },
+      user: req.session.user,
     });
   }
 
@@ -30,6 +32,7 @@ exports.postLogin = async (req, res, next) => {
       isLoggedIn: false,
       errors: ["Inavlid email or password"],
       oldInput: { email },
+      user: req.session.user,
     });
   }
   req.session.isLoggedIn = true;
@@ -54,6 +57,7 @@ exports.getSignup = (req, res, next) => {
       lastname: "",
       password: "",
       email: "",
+      user: req.session.user,
     },
   });
 };
@@ -116,6 +120,7 @@ exports.postSignup = [
           email,
           userType,
         },
+        user: req.session.user,
       });
     }
 
@@ -145,6 +150,7 @@ exports.postSignup = [
             email,
             userType,
           },
+          user: req.session.user,
         });
       });
   },

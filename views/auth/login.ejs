@@ -3,39 +3,105 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AddHome</title>
+    <title>Login - Airbnb</title>
     <link rel="stylesheet" href="/stylesheets/output.css" />
   </head>
-  <body class="bg-white">
+  <body class="bg-gradient-to-br from-gray-50 to-gray-100">
     <%- include("../partials/header") %>
-    <header class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 class="text-3xl font-semibold text-gray-900 mb-8">Login to AirBnB</h1>
-    </header>
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <form action="/login" method="POST" class="max-w-lg">
-        <%- include("../partials/errors") %>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
-          required
-          value="<%= oldInput.email ? oldInput.email : '' %>"
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter your password"
-          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400 text-gray-400 focus:text-zinc-900 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500"
-          required
-        />
-        <button
-          type="submit"
-          class="mt-4 inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
+
+    <div
+      class="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8 animate-fadeIn"
+    >
+      <div class="sm:mx-auto sm:w-full sm:max-w-md">
+        <h2
+          class="mt-6 text-center text-3xl font-extrabold text-gray-900 tracking-tight"
         >
-          Login
-        </button>
-      </form>
-    </main>
+          Welcome back
+        </h2>
+        <p class="mt-2 text-center text-sm text-gray-600">
+          Please login to your account
+        </p>
+      </div>
+
+      <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div
+          class="bg-white py-8 px-4 shadow-lg sm:rounded-xl sm:px-10 backdrop-blur-sm"
+        >
+          <form action="/login" method="POST" class="space-y-6">
+            <%- include("../partials/errors") %>
+
+            <div class="space-y-1">
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Email address
+              </label>
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  required
+                  value="<%= oldInput.email ? oldInput.email : '' %>"
+                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all duration-150 ease-in-out sm:text-sm"
+                />
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Password
+              </label>
+              <div class="mt-1 relative rounded-md shadow-sm">
+                <input
+                  id="password"
+                  type="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  required
+                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:border-rose-500 transition-all duration-150 ease-in-out sm:text-sm"
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 transform transition-all duration-150 ease-in-out hover:scale-[1.02] active:scale-[0.98] shadow-sm"
+              >
+                Sign in
+              </button>
+            </div>
+          </form>
+
+          <div class="mt-6">
+            <div class="relative">
+              <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+              </div>
+              <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500">
+                  Don't have an account?
+                </span>
+              </div>
+            </div>
+
+            <div class="mt-6">
+              <a
+                href="/signup"
+                class="w-full flex justify-center py-2 px-4 border border-rose-600 rounded-md text-sm font-medium text-rose-600 bg-white hover:bg-rose-50 transition-all duration-150 ease-in-out transform hover:scale-[1.02] active:scale-[0.98] shadow-sm"
+              >
+                Create new account
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
