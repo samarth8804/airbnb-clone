@@ -1,11 +1,17 @@
+const session = require("express-session");
 const Favourite = require("../models/favourite");
 const Home = require("../models/home");
 
 exports.index = (req, res, next) => {
   // console.log(registeredHomes);
   // res.sendFile(path.join(rootDir, "views", "home.html"));
+  console.log(req.session, req.isLoggedIn);
   Home.find().then((registeredHomes) => {
-    res.render("store/index", { registeredHomes, currentPage: "index" });
+    res.render("store/index", {
+      registeredHomes,
+      currentPage: "index",
+      isLoggedIn: req.isLoggedIn,
+    });
   });
 };
 
@@ -13,12 +19,19 @@ exports.getHome = (req, res, next) => {
   // console.log(registeredHomes);
   // res.sendFile(path.join(rootDir, "views", "home.html"));
   Home.find().then((registeredHomes) => {
-    res.render("store/homeList", { registeredHomes, currentPage: "home" });
+    res.render("store/homeList", {
+      registeredHomes,
+      currentPage: "home",
+      isLoggedIn: req.isLoggedIn,
+    });
   });
 };
 
 exports.bookings = (req, res, next) => {
-  res.render("store/bookings", { currentPage: "bookings" });
+  res.render("store/bookings", {
+    currentPage: "bookings",
+    isLoggedIn: req.isLoggedIn,
+  });
 };
 
 exports.favouriteList = (req, res, next) => {
@@ -31,6 +44,7 @@ exports.favouriteList = (req, res, next) => {
         favourites: favouriteDetails,
         pageTitle: "My Favourites",
         currentPage: "favourites",
+        isLoggedIn: req.isLoggedIn,
       });
     });
 };
@@ -39,9 +53,13 @@ exports.getHomeDetails = (req, res, next) => {
   const homeId = req.params.homeId;
   Home.findById(homeId).then((home) => {
     if (!home) {
-      res.redirect("/user/homeList");
+      res.redirect("/homeList");
     } else {
-      res.render("store/homeDetail", { currentPage: "detail", home });
+      res.render("store/homeDetail", {
+        currentPage: "detail",
+        home,
+        isLoggedIn: req.isLoggedIn,
+      });
     }
   });
 };
@@ -59,7 +77,7 @@ exports.addFavourite = (req, res, next) => {
       console.log("Error while making favourite : ", err);
     })
     .finally(() => {
-      res.redirect("/user/favourites");
+      res.redirect("/favourites");
     });
 };
 
@@ -73,6 +91,6 @@ exports.deleteFavourites = (req, res, next) => {
       console.log("Error while deleting favourite : ", err);
     })
     .finally(() => {
-      res.redirect("/user/favourites");
+      res.redirect("/favourites");
     });
 };

@@ -5,7 +5,10 @@ const Favourite = require("../models/favourite");
 
 exports.getAddHome = (req, res, next) => {
   // res.sendFile(path.join(rootDir, "views", "addHome.html"));
-  res.render("host/addHome", { currentPage: "addHome" });
+  res.render("host/addHome", {
+    currentPage: "addHome",
+    isLoggedIn: req.session.isLoggedIn,
+  });
 };
 
 exports.homeAdded = (req, res, next) => {
@@ -25,7 +28,10 @@ exports.homeAdded = (req, res, next) => {
     console.log("Home saved successfully ", result);
   });
 
-  res.render("host/homeAdded", { currentPage: "homeAdded" });
+  res.render("host/homeAdded", {
+    currentPage: "homeAdded",
+    isLoggedIn: req.isLoggedIn,
+  });
 };
 
 exports.getHostHomes = (req, res, next) => {
@@ -33,6 +39,7 @@ exports.getHostHomes = (req, res, next) => {
     res.render("host/hostHomeList", {
       registeredHomes,
       currentPage: "hostHomes",
+      isLoggedIn: req.session.isLoggedIn,
     });
   });
 };
@@ -52,6 +59,7 @@ exports.getEditHome = (req, res, next) => {
       currentPage: "editHome",
       editing: editing,
       home: home,
+      isLoggedIn: req.session.isLoggedIn,
     });
   });
 };

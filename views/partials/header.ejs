@@ -11,15 +11,16 @@
         <div class="flex gap-5 h-16">
           <div class="flex">
             <a
-              href="/user"
+              href="/"
               class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'index' ? 'text-rose-500' : 'hover:text-rose-500'%>"
             >
               Airbnb
             </a>
           </div>
+          <% if(isLoggedIn) { %>
           <div class="flex">
             <a
-              href="/user/homeList"
+              href="/homeList"
               class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'home' ? 'text-rose-500' : 'hover:text-rose-500'%>"
             >
               Home
@@ -27,7 +28,7 @@
           </div>
           <div class="flex">
             <a
-              href="/user/favourites"
+              href="/favourites"
               class="inline-flex items-center px-4 py-2 text-base font-medium text-gray-900 <%= currentPage === 'favourites' ? 'text-rose-500' : 'hover:text-rose-500'%>"
             >
               Favourites
@@ -35,7 +36,7 @@
           </div>
           <div class="flex items-center">
             <a
-              href="/user/bookings"
+              href="/bookings"
               class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'bookings' ? 'text-rose-500' : 'hover:text-rose-500'%>"
             >
               Bookings
@@ -56,6 +57,26 @@
             >
               Add Home
             </a>
+          </div>
+          <% } %>
+          <div class="flex items-center">
+            <% if(!isLoggedIn) { %>
+            <a
+              href="/login"
+              class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'login' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+            >
+              Login
+            </a>
+            <% } else { %>
+            <form action="/logout" method="POST">
+              <button
+                type="Sumbit"
+                class="inline-flex items-center px-4 py-2 text-base font-medium <%= currentPage === 'login' ? 'text-rose-500' : 'hover:text-rose-500'%>"
+              >
+                Logout
+              </button>
+            </form>
+            <% } %>
           </div>
         </div>
       </div>
