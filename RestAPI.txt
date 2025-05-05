@@ -1,0 +1,38 @@
+---- REST API / JSON Requests 
+
+--- What are Async Requests
+-> Async network requests enable web pages to communicate with servers without reloading 
+-> The client sends JSON requests to the server asynchronously in single-page apps.
+-> The server processes the request and returns the JSON response.
+-> The page updates dynamically using the received data.
+
+--- What are REST APIs
+-> REST APIs enable communication between clients and servers using HTTP.
+-> They are mainly identified by a URL
+-> They use standard HTTP methods like GET,POST,PUT,DELETE
+-> Data is exchanged in formats like JSON or XML
+-> REST APIs allow clients to access and manipulate web resources
+-> REST APIs are stateless
+
+--- Decoupling Frontend and Backend 
+-> Seprating front-end and back-end allows independent development and scaling 
+-> REST APIs serve as a communication layer between them
+-> Frontend interacts with back-end through standardized RESTful calls.
+-> Decoupling enhances flexibility and simpilfies maintenance 
+-> REST APIs enable frontend updates without altering backend codes
+
+--- Routes and HTTP methods
+-> REST API routes define the endpoints (URLs) where resources can be accessed by clients.
+-> GET : Retrieves data from the server at the specified routes
+-> POST : Sends new data to the server to create a resource 
+-> PUT : Updates or replaces an existing resource at a given route 
+-> DELETE : Removes a resource from the server at the specified route
+-> PATCH : Partially updates an existing resource with new data
+
+--- REST Core Concepts
+-> Statelessness : Each request contains all necessary information ; the server maintains no client sessions
+-> Uniform Interface : Standardized communication using HTTP methods like GET,POST,PUT,DELETE,PATCH.
+-> Client-Server Separation : independent development of frontend and backend components
+-> Cacheability : Responses indeicate if they can be cached to improve performance
+-> Layered System : Architecture allows for multiple layers between client and servers.
+-> Code on demand : Servers can extend client functionality by sending executable code
