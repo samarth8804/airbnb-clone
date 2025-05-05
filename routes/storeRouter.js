@@ -11,6 +11,7 @@ const {
   getHomeDetails,
   addFavourite,
   deleteFavourites,
+  getHouseRules,
 } = require("../controllers/storeController");
 
 router.get("/homeList", getHome);
@@ -26,4 +27,6 @@ router.get("/details/:homeId", getHomeDetails);
 router.post("/favourites", addFavourite);
 
 router.post("/delete-favourite/:homeId", deleteFavourites);
+
+router.get("/rules/:homeId", getHouseRules);
 module.exports = router;

@@ -6,40 +6,140 @@
     <title><%= home.houseName %> - Details</title>
     <link rel="stylesheet" href="/stylesheets/output.css" />
   </head>
-  <body class="bg-white">
+  <body class="bg-gray-50">
     <%- include("../partials/header") %>
 
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div class="mb-6">
+      <!-- Hero Section -->
+      <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-4">
           <%= home.houseName %>
         </h1>
         <img
           src="<%= home.houseImage %>"
           alt="<%= home.houseName %>"
-          class="w-full h-96 object-cover rounded-lg shadow-md mb-6"
+          class="w-full h-[500px] object-cover rounded-xl shadow-md mb-6"
         />
 
-        <div class="space-y-2">
-          <p class="text-lg text-gray-700">
-            <strong>Location:</strong> <%= home.location %>
-          </p>
-          <p class="text-lg text-gray-700">
-            <strong>Price per Night:</strong> ₹<%= home.price %>
-          </p>
-          <p class="text-lg text-gray-700">
-            <strong>Rating:</strong> ⭐ <%= home.rating %>/5
-          </p>
+        <!-- Key Details -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-4 border-b">
+          <div class="flex items-center space-x-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <p class="text-lg text-gray-700"><%= home.location %></p>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-gray-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <p class="text-lg text-gray-700">₹<%= home.price %> per night</p>
+          </div>
+
+          <div class="flex items-center space-x-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-yellow-400"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+              />
+            </svg>
+            <p class="text-lg text-gray-700"><%= home.rating %>/5</p>
+          </div>
+        </div>
+
+        <!-- Description Section -->
+        <div class="mt-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">Description</h2>
+          <div class="prose prose-rose max-w-none">
+            <p class="text-gray-700 leading-relaxed"><%= home.description %></p>
+          </div>
+        </div>
+
+        <!-- House Rules Section -->
+        <div class="mt-8">
+          <h2 class="text-2xl font-semibold text-gray-900 mb-4">House Rules</h2>
+          <a
+            href="/rules/<%= home._id %>"
+            download
+            class="inline-flex items-center px-4 py-3 border border-rose-500 text-base font-medium rounded-lg text-rose-500 bg-white hover:bg-rose-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 transition-all duration-150 group"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 mr-2 group-hover:animate-bounce"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"
+              />
+            </svg>
+            Download House Rules PDF
+          </a>
         </div>
       </div>
 
-      <div><%- include("../partials/favourite")%></div>
+      <!-- Favorites Section -->
+      <div class="bg-white rounded-2xl shadow-sm p-6 mb-8">
+        <%- include("../partials/favourite")%>
+      </div>
 
+      <!-- Back Button -->
       <a
         href="/"
-        class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 mt-4"
+        class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-sm text-white bg-rose-500 hover:bg-rose-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500 transition-all duration-150 hover:scale-105"
       >
-        Go Home
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-2"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Back to Home
       </a>
     </main>
   </body>

@@ -2,6 +2,7 @@
 
 const Home = require("../models/home");
 const Favourite = require("../models/favourite");
+const fs = require("fs");
 
 exports.getAddHome = (req, res, next) => {
   // res.sendFile(path.join(rootDir, "views", "addHome.html"));
@@ -87,7 +88,10 @@ exports.postEditHome = (req, res, next) => {
       home.rating = rating;
       home.description = description;
       if (req.file) {
-        const houseImage = req.file.path;
+        fs.unlink(home.houseImage, (err) => {
+          console.log("Error while deleting image : ", err);
+        });
+        home.houseImage = req.file.path;
       }
       home
         .save()
