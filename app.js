@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const session = require("express-session");
 const MondoDBStore = require("connect-mongodb-session")(session);
+const multer = require("multer");
+const { default: mongoose } = require("mongoose");
 const DB_PATH =
   "mongodb+srv://samarthmittal0808:samarth%40atlas%401@cluster0.a9socrh.mongodb.net/airbnb?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -11,7 +13,6 @@ const { hostRouter } = require("./routes/hostRouter");
 const authRouter = require("./routes/authRouter");
 const rootDir = require("./utils/pathUtils");
 const { error404 } = require("./controllers/error");
-const { default: mongoose } = require("mongoose");
 
 // ejs setup
 app.set("view engine", "ejs");
@@ -22,8 +23,45 @@ const store = new MondoDBStore({
   collection: "sessions",
 });
 
+const randomString = (length) => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * chars.length);
+    result += chars[randomIndex];
+  }
+  return result;
+};
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
+  },
+  filename: (req, file, cb) => {
+    cb(null, randomString(10) + "-" + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const multerOptions = { storage, fileFilter };
+
 app.use(express.urlencoded());
+app.use(multer(multerOptions).single("houseImage"));
 app.use(express.static(path.join(rootDir, "public")));
+app.use("/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/host/uploads", express.static(path.join(rootDir, "uploads")));
+app.use("/details/uploads", express.static(path.join(rootDir, "uploads")));
 app.use(
   session({
     secret: "Airbnb App",

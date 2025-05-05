@@ -8,13 +8,20 @@ exports.getAddHome = (req, res, next) => {
   res.render("host/addHome", {
     currentPage: "addHome",
     isLoggedIn: req.session.isLoggedIn,
-    user: req.session.user
+    user: req.session.user,
   });
 };
 
 exports.homeAdded = (req, res, next) => {
-  const { houseName, price, location, houseImage, rating, description } =
-    req.body;
+  const { houseName, price, location, rating, description } = req.body;
+
+  if (!req.file) {
+    return res.status(422).send("No image provided");
+  }
+
+  const houseImage = req.file.path;
+
+  console.log(req.file);
 
   const home = new Home({
     houseName,
@@ -32,7 +39,7 @@ exports.homeAdded = (req, res, next) => {
   res.render("host/homeAdded", {
     currentPage: "homeAdded",
     isLoggedIn: req.isLoggedIn,
-    user: req.session.user
+    user: req.session.user,
   });
 };
 
@@ -42,7 +49,7 @@ exports.getHostHomes = (req, res, next) => {
       registeredHomes,
       currentPage: "hostHomes",
       isLoggedIn: req.session.isLoggedIn,
-      user: req.session.user
+      user: req.session.user,
     });
   });
 };
@@ -63,15 +70,14 @@ exports.getEditHome = (req, res, next) => {
       editing: editing,
       home: home,
       isLoggedIn: req.session.isLoggedIn,
-      user: req.session.user
+      user: req.session.user,
     });
   });
 };
 
 exports.postEditHome = (req, res, next) => {
   console.log("Home edit successfull for ", req.body.houseName);
-  const { id, houseName, price, location, houseImage, rating, description } =
-    req.body;
+  const { id, houseName, price, location, rating, description } = req.body;
 
   Home.findById(id)
     .then((home) => {
@@ -79,8 +85,10 @@ exports.postEditHome = (req, res, next) => {
       home.price = price;
       home.location = location;
       home.rating = rating;
-      home.houseImage = houseImage;
       home.description = description;
+      if (req.file) {
+        const houseImage = req.file.path;
+      }
       home
         .save()
         .then((result) => {
